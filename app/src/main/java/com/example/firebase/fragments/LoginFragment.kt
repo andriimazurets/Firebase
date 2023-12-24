@@ -43,18 +43,23 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_LONG).show()
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.placeHolder, MainFragment.newInstance())
-                        .commit()
-                } else {
-                    Toast.makeText(context, "Wrong password or email!", Toast.LENGTH_LONG).show()
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(context, "Login Successful!", Toast.LENGTH_LONG).show()
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.placeHolder, MainFragment.newInstance())
+                            .commit()
+                    } else {
+                        Toast.makeText(context, "Wrong password or email!", Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
+        } else {
+            Toast.makeText(context, "Email or password is empty!", Toast.LENGTH_LONG).show()
+        }
     }
+
 
     companion object {
         @JvmStatic

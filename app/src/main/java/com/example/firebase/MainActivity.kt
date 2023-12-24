@@ -3,7 +3,7 @@ package com.example.firebase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.firebase.databinding.ActivityMainBinding
-import com.example.firebase.fragments.MainFragment
+import com.example.firebase.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         supportFragmentManager.beginTransaction()
-            .replace(R.id.placeHolder, MainFragment.newInstance())
+            .replace(R.id.placeHolder, LoginFragment.newInstance())
             .commit()
     }
 }

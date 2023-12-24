@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.firebase.R
 import com.example.firebase.databinding.FragmentRegisterBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
 class RegisterFragment : Fragment() {
@@ -45,6 +47,16 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(context, "Registering user successful!", Toast.LENGTH_LONG).show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.placeHolder, MainFragment.newInstance())
+                        .commit()
+                } else {
+                    Toast.makeText(context, "Registration failed!", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     companion object {
